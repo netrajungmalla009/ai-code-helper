@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
+from src.api.v1.api import api_router
 from src.core.config import settings
-from src.models.health import HealthResponse, RootResponse
 
 app = FastAPI(
     title=settings.app_name,
@@ -11,25 +11,7 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-
-@app.get(
-    "/",
-    response_model=RootResponse,
-    tags=["System"],
-    summary="Root endpoint",
+app.include_router(
+    api_router,
+    prefix=settings.api_v1_str,
 )
-async def root():
-    return RootResponse(message=f"{settings.app_name} API is running")
-
-
-@app.get(
-    "/health",
-    response_model=HealthResponse,
-    tags=["System"],
-    summary="Health check endpoint",
-)
-async def health_check():
-    return HealthResponse(
-        status="healthy",
-        environment=settings.environment,
-    )

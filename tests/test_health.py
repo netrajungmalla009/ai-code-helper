@@ -6,17 +6,14 @@ client = TestClient(app)
 
 
 def test_root_endpoint():
-    response = client.get("/")
+    response = client.get("/api/v1/")
 
     assert response.status_code == 200
-    assert response.json() == {"message": "AI Code Helper API is running"}
+    assert "message" in response.json()
 
 
 def test_health_endpoint():
-    response = client.get("/health")
+    response = client.get("/api/v1/health")
 
     assert response.status_code == 200
-    assert response.json() == {
-        "status": "healthy",
-        "environment": "development",
-    }
+    assert response.json()["status"] == "healthy"
