@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from src.api.v1.api import api_router
 from src.core.config import settings
 from src.core.logging import configure_logging, get_logger
 
@@ -24,18 +25,7 @@ app = FastAPI(
     title=settings.app_name,
     lifespan=lifespan,
 )
-
-
-@app.get(f"{settings.api_v1_str}/")
-async def root():
-    return {
-        "message": "AI Code Helper API",
-        "environment": settings.environment,
-    }
-
-
-@app.get(f"{settings.api_v1_str}/health")
-async def health_check():
-    return {
-        "status": "healthy",
-    }
+app.include_router(
+    api_router,
+    prefix=settings.api_v1_str,
+)
