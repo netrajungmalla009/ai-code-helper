@@ -9,9 +9,7 @@ def test_root_endpoint():
     response = client.get("/")
 
     assert response.status_code == 200
-    assert response.json() == {
-        "message": "AI Code Helper API is running"
-    }
+    assert response.json() == {"message": "AI Code Helper API is running"}
 
 
 def test_health_endpoint():
