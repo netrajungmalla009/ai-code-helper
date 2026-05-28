@@ -1,10 +1,10 @@
-from pydantic import BaseModel
+from src.models.base import BaseResponse
 
 
-class RootResponse(BaseModel):
+class RootResponse(BaseResponse):
     message: str
 
 
-class HealthResponse(BaseModel):
+class HealthResponse(BaseResponse):
     status: str
     environment: str

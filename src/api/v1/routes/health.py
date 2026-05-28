@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from src.core.config import settings
+from src.models.demo import DemoRequest
 from src.models.health import HealthResponse, RootResponse
 
 router = APIRouter()
@@ -27,3 +28,16 @@ async def health_check():
         status="healthy",
         environment=settings.environment,
     )
+
+
+@router.post(
+    "/demo-validation",
+    tags=["System"],
+    summary="Validation testing endpoint",
+)
+async def demo_validation(payload: DemoRequest):
+    return {
+        "success": True,
+        "message": "Validation passed",
+        "payload": payload.model_dump(),
+    }
